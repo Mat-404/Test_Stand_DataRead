@@ -54,6 +54,7 @@ for onePort in ports:
         portList.append(str(onePort) + " - Active")
         ser.close()
     except:
+        portList.append(str(onePort) + "-Inactive")
         print("Serial port inactive.")
 
 if len(portList) == 0:
@@ -81,7 +82,10 @@ def select():
         selectVar = my_listbox.get(ANCHOR)
         a = portList.index(selectVar)
         portVar = ports[a]
+        # portVarList = portVar.split(" ")
+        # portVar = portVarList[0]
         print(portVar)
+        portVar = 'COM11'
         root.destroy()
     elif my_listbox.curselection() == "(No active ports found.)":
         my_label.config(text="No active ports found.")
@@ -106,7 +110,8 @@ my_label = Label(root, text="")
 root.mainloop()
 
 try:
-    ser = serial.Serial('portVar', 115200, timeout=10)
+    ser.baudrate = 115200
+    ser.port = 'COM11'
     ser.open()
 
     fig = plt.figure()
